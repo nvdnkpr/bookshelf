@@ -205,7 +205,66 @@ module.exports = function(bookshelf) {
       {id: 3, name: 'search engine'},
       {id: 4, name: 'not used'},
       {id: 10, name: 'computers'},
-    ])
+    ]),
+
+    knex('sections').insert([{
+      id: 1, name: 'Section One!',
+    }, {
+      id: 2, name: 'Section Two :('
+    }]),
+
+    knex('itemables').insert([{
+      section_id: 2,
+      itemable_id: 1,
+      itemable_type: 'field',
+      order: 3
+    }, {
+      section_id: 1,
+      itemable_id: 2,
+      itemable_type: 'field',
+      order: 1
+    }, {
+      section_id: 2,
+      itemable_id: 2,
+      itemable_type: 'field',
+      order: 0
+    }, {
+      section_id: 2,
+      itemable_id: 2,
+      itemable_type: 'fieldgroup',
+      order: 1
+    }, {
+      section_id: 2,
+      itemable_id: 4,
+      itemable_type: 'field',
+      order: 2
+    }]),
+
+    knex('fields').insert([{
+      id: 1,
+      fieldstuff: 'input'
+    }, {
+      id: 2,
+      fieldstuff: 'select'
+    },{
+      id: 3,
+      fieldstuff: 'buttongroup'
+    },{
+      id: 4,
+      fieldstuff: 'optgroup'
+    }]),
+
+    knex('fieldgroup').insert([{
+      id: 1,
+      fieldgroupstuff: 'a buncha buttons'
+    }, {
+      id: 2,
+      fieldgroupstuff: 'a buncha inputs'
+    }, {
+      id: 3,
+      fieldgroupstuff: 'a buncha selects'
+    }])
+
 
   ]).then(null, function(e) {
     console.log(e.stack);

@@ -25,6 +25,10 @@ module.exports = function(Bookshelf) {
     var Customer   = Models.Customer;
     var Instance   = Models.Instance;
     var Hostname   = Models.Hostname;
+    var Itemable   = Models.Itemable;
+    var Field      = Models.Field;
+    var Section    = Models.Section;
+    var Fieldgroup = Models.Fieldgroup;
 
     // Collections
     var Sites    = Collections.Sites;
@@ -402,6 +406,20 @@ module.exports = function(Bookshelf) {
       it('#65 - should eager load correctly for collections', function() {
 
         return new Bookshelf.Collection([], {model: Hostname}).fetch({log: true,  withRelated: 'instance'});
+
+      });
+
+    });
+
+    describe('morphToMany', function() {
+
+      it('section should morphToMany field and fieldgroups', function() {
+
+        return new Section({id: 1}).fetch({withRelated: 'items'}).then(function(collection) {
+
+          expect(collection).to.have.length(4);
+
+        });
 
       });
 

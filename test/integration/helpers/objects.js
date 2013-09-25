@@ -205,6 +205,31 @@ module.exports = function(Bookshelf) {
     }
   });
 
+  var Section = Bookshelf.Model.extend({
+    tableName: 'sections',
+    items: function() {
+      return this.morphToMany(Itemable, Field, Fieldgroup);
+    }
+  });
+
+  var Itemable = Bookshelf.Model.extend({
+    tableName: 'itemables',
+    field: function() {
+      return this.morphBelongsTo(Field);
+    },
+    fieldgroup: function() {
+      return this.morphBelongsTo(Fieldgroup);
+    }
+  });
+
+  var Field = Bookshelf.Model.extend({
+    tableName: 'fields'
+  });
+
+  var Fieldgroup = Bookshelf.Model.extend({
+    tableName: 'fieldgroups'
+  });
+
   return {
     Models: {
       Site: Site,
@@ -222,7 +247,11 @@ module.exports = function(Bookshelf) {
       Customer: Customer,
       Settings: Settings,
       Instance: Instance,
-      Hostname: Hostname
+      Hostname: Hostname,
+      Section: Section,
+      Itemable: Itemable,
+      Field: Field,
+      Fieldgroup: Fieldgroup
     },
     Collections: {
       Sites: Sites,

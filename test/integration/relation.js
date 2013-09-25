@@ -75,6 +75,31 @@ module.exports = function(Bookshelf) {
       }
     });
 
+    var Section = Bookshelf.Model.extend({
+      tableName: 'sections',
+      items: function() {
+        return this.morphToMany(Itemable, Field, Fieldgroup);
+      }
+    });
+
+    var Itemable = Bookshelf.Model.extend({
+      tableName: 'itemables',
+      field: function() {
+        return this.belongsToMorph(Field);
+      },
+      fieldgroup: function() {
+        return this.belongsToMorph(Fieldgroup);
+      }
+    });
+
+    var Field = Bookshelf.Model.extend({
+      tableName: 'fields'
+    });
+
+    var Fieldgroup = Bookshelf.Model.extend({
+      tableName: 'fieldgroups'
+    });
+
     describe('Bookshelf.Relation', function() {
 
       it('should not error if the type / target are not specified', function() {

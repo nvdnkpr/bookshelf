@@ -64,6 +64,18 @@ define(function(require, exports) {
       return this._relation('morphTo', null, {morphName: morphName, candidates: _.rest(arguments)}).init(this);
     },
 
+    // Creates a polymorphic `many-to-many` relation between the `Target`
+    // model and the rest of the available models.
+    morphToMany: function(morphName) {
+      return this._relation('morphToMany', null, {morphName: morphName, candidates: _.rest(arguments)}).init(this);
+    },
+
+    // Used as the opposite of a `morphToMany` relation, this defines a polymorphic
+    // `belongsTo` relation attribute item.
+    morphBelongsTo: function(Target) {
+      return this._relation('morphBelongsTo', Target).init(this);
+    },
+
     // Used to define passthrough relationships - `hasOne`, `hasMany`,
     // `belongsTo` or `belongsToMany`, "through" a `Interim` model or collection.
     through: function(Interim, foreignKey, otherKey) {

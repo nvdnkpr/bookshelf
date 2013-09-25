@@ -6,7 +6,8 @@ var drops = [
   'admins_sites', 'authors', 'authors_posts',
   'blogs', 'posts', 'tags', 'posts_tags', 'comments',
   'users', 'roles', 'photos', 'users_roles', 'info',
-  'Customer', 'Settings', 'hostnames', 'instances'
+  'Customer', 'Settings', 'hostnames', 'instances',
+  'sections', 'itemables', 'fields', 'fieldgroups'
 ];
 
 module.exports = function(Bookshelf) {
@@ -139,6 +140,29 @@ module.exports = function(Bookshelf) {
       schema.createTable('instances', function(table){
         table.bigIncrements('id');
         table.string('name');
+      }),
+
+      schema.createTable('sections', function(table) {
+        table.increments();
+        table.string('name');
+      }),
+
+      schema.createTable('itemables', function(table) {
+        table.increments();
+        table.integer('section_id');
+        table.integer('itemable_id');
+        table.string('itemable_type');
+        table.integer('order');
+      }),
+
+      schema.createTable('fields', function(table) {
+        table.increments();
+        table.string('fieldstuff');
+      }),
+
+      schema.createTable('fieldgroups', function(table) {
+        table.increments();
+        table.string('fieldgroupstuff');
       })
 
     ]);

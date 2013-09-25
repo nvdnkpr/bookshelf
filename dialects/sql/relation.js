@@ -46,7 +46,7 @@ define(function(require, exports) {
       var target = this.target ? this.relatedInstance() : {};
           target.relatedData = this;
 
-      if (this.type === 'belongsToMany') {
+      if (this.type === 'belongsToMany' || this.type === 'morphToMany') {
         _.extend(target, pivotHelpers);
       }
 
@@ -133,6 +133,9 @@ define(function(require, exports) {
       if (this.isThrough()) columns.push(this.throughIdAttribute);
       columns.push(this.key('foreignKey'));
       if (this.type === 'belongsToMany') columns.push(this.key('otherKey'));
+      if (this.type === 'morphToMany') {
+        columns.push();
+      }
       push.apply(columns, this.pivotColumns);
       push.apply(knex.columns, _.map(columns, function(col) {
         return joinTable + '.' + col + ' as _pivot_' + col;
@@ -143,7 +146,7 @@ define(function(require, exports) {
     joinClauses: function(knex) {
       var joinTable = this.joinTable();
 
-      if (this.type === 'belongsTo' || this.type === 'belongsToMany') {
+      if (this.type === 'belongsTo' || this.type === 'belongsToMany' || this.type === 'morphToMany') {
 
         var targetKey = (this.type === 'belongsTo' ? this.key('foreignKey') : this.key('otherKey'));
 
