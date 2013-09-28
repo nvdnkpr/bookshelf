@@ -67,12 +67,18 @@ define(function(require, exports) {
     // Creates a polymorphic `many-to-many` relation between the `Target`
     // model and the rest of the available models.
     morphToMany: function(morphName) {
-      return this._relation('morphToMany', null, {morphName: morphName, candidates: _.rest(arguments)}).init(this);
+      var data;
+      if (_.isString(morphName)) {
+        data = {morphName: morphName, candidates: _.rest(arguments)};
+      } else {
+        data = {candidates: _.toArray(arguments)};
+      }
+      return this._relation('morphToMany', null, data).init(this);
     },
 
     // Used as the opposite of a `morphToMany` relation, this defines a polymorphic
     // `belongsTo` relation attribute item.
-    morphBelongsTo: function(Target) {
+    morphBelongsTo: function(Target, name) {
       return this._relation('morphBelongsTo', Target).init(this);
     },
 

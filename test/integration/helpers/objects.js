@@ -208,7 +208,8 @@ module.exports = function(Bookshelf) {
   var Section = Bookshelf.Model.extend({
     tableName: 'sections',
     items: function() {
-      return this.morphToMany(Itemable, Field, Fieldgroup);
+      // return this.morphToMany('itemables', Field, Fieldgroup);
+      return this.morphToMany(Field, Fieldgroup).through(Itemable);
     }
   });
 
